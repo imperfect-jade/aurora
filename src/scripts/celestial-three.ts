@@ -23,6 +23,8 @@ interface SceneOptions {
   useFallback: (container: HTMLElement) => void;
 }
 
+const CELESTIAL_ROTATION_RADIANS_PER_MS = (Math.PI * 2) / (5 * 60 * 1_000);
+
 function currentMode(): "earth" | "moon" {
   return document.documentElement.dataset.theme === "light" ? "moon" : "earth";
 }
@@ -101,7 +103,7 @@ export async function startCelestialScene({
     if (!running) return;
     const delta = Math.min(50, time - lastTime);
     lastTime = time;
-    globe.rotation.y += delta * 0.0000015;
+    globe.rotation.y += delta * CELESTIAL_ROTATION_RADIANS_PER_MS;
     atmosphere.rotation.y = globe.rotation.y;
     renderer.render(scene, camera);
     animationFrame = requestAnimationFrame(render);
