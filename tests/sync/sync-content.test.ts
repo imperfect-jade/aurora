@@ -50,6 +50,25 @@ afterEach(async () => {
 });
 
 describe("public Vault synchronization", () => {
+  it("preflights public notes without changing the Vault or repository", async () => {
+    const { checkPublicNotes } = await loadSync();
+    const vaultRoot = await makeTempDirectory("aurora-vault-");
+    const repoRoot = await makeTempDirectory("aurora-repo-");
+    const notePath = join(vaultRoot, "40 Published", "Tools", "检查.md");
+    await writeNote(
+      notePath,
+      "title: 检查工具\ntype: tool\nslug: check-tool\ncategory: tools\nsummary: 只读预检。\nstatus: complete\ncreated: 2026-09-01\nupdated: 2026-10-01",
+      "# 检查工具\n\n## 用法\n\n安全正文。",
+    );
+    const before = await fileFingerprint(notePath);
+
+    const result = await checkPublicNotes({ vaultRoot, repoRoot });
+
+    expect(result.written).toEqual(["check-tool"]);
+    expect(await readdir(repoRoot)).toEqual([]);
+    expect(await fileFingerprint(notePath)).toEqual(before);
+  });
+
   it("reads only published notes, preserves the Vault, and copies only referenced assets", async () => {
     const { syncPublicNotes } = await loadSync();
     const vaultRoot = await makeTempDirectory("aurora-vault-");

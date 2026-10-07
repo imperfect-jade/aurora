@@ -12,8 +12,8 @@ import type { Root as HastRoot, Element } from "hast";
 import { unified } from "unified";
 import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";
-import { remarkObsidianCallouts } from "./plugins/callouts";
-import { remarkRawHtmlPolicy } from "./plugins/raw-html-policy";
+import { remarkObsidianCallouts } from "./plugins/callouts.ts";
+import { remarkRawHtmlPolicy } from "./plugins/raw-html-policy.ts";
 
 export interface MarkdownNoteSource {
   title: string;

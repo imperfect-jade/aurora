@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { copyFile, mkdir, readFile } from "node:fs/promises";
 import { basename, extname, join } from "node:path";
 import sharp from "sharp";
-import { assertPathWithinRoot } from "../security/public-content";
+import { assertPathWithinRoot } from "../security/public-content.ts";
 
 const obsidianImagePattern = /!\[\[([^\]|]+\.(?:avif|gif|jpe?g|png|svg|webp))(?:\|([^\]]+))?\]\]/gi;
 const rasterExtensions = new Set([".avif", ".gif", ".jpg", ".jpeg", ".png", ".webp"]);

@@ -7,14 +7,16 @@ import {
   rename,
   rm,
   writeFile,
+  mkdtemp,
 } from "node:fs/promises";
 import { constants } from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, extname, join, resolve } from "node:path";
-import { loadCategoryRegistry, parsePublicNotes, type PublicNote } from "../content/schema";
-import { transformMarkdown } from "../markdown/pipeline";
-import { assertPathWithinRoot } from "../security/public-content";
-import { buildAttachmentIndex, rewriteReferencedAssets } from "./assets";
-import { parseFrontmatter, serializePublicMarkdown } from "./frontmatter";
+import { loadCategoryRegistry, parsePublicNotes, type PublicNote } from "../content/schema.ts";
+import { transformMarkdown } from "../markdown/pipeline.ts";
+import { assertPathWithinRoot } from "../security/public-content.ts";
+import { buildAttachmentIndex, rewriteReferencedAssets } from "./assets.ts";
+import { parseFrontmatter, serializePublicMarkdown } from "./frontmatter.ts";
 
 const publishedDirectories = [
   join("40 Published", "Courses"),
@@ -216,5 +218,14 @@ export async function syncPublicNotes(options: SyncOptions): Promise<SyncResult>
   } catch (error) {
     await rm(stageRoot, { recursive: true, force: true });
     throw error;
+  }
+}
+
+export async function checkPublicNotes(options: SyncOptions): Promise<SyncResult> {
+  const temporaryRepo = await mkdtemp(join(tmpdir(), "aurora-sync-check-"));
+  try {
+    return await syncPublicNotes({ ...options, repoRoot: temporaryRepo });
+  } finally {
+    await rm(temporaryRepo, { recursive: true, force: true });
   }
 }

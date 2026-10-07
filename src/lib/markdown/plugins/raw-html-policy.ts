@@ -1,7 +1,7 @@
 import type { Html, Root } from "mdast";
 import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";
-import { assertSafeHtml } from "../../security/html-policy";
+import { assertSafeHtml } from "../../security/html-policy.ts";
 
 export function remarkRawHtmlPolicy(
   allowedIframeHosts: readonly string[],
