@@ -11,3 +11,4 @@ test-results/
 !.env.example
 config/vault.local.yml
 .aurora-sync-stage-*/
+.aurora-release-*.json

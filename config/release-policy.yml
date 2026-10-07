@@ -1,0 +1,19 @@
+default: manual
+auto_authorizable:
+  - content-add
+  - content-update
+forever_manual:
+  - content-delete
+  - content-withdrawal
+  - slug-change
+  - category-move
+  - large-diff
+  - dependency-change
+  - workflow-change
+  - visual-change
+  - rollback
+warning_behavior: manual
+blocker_behavior: blocked
+large_diff:
+  files: 20
+  changed_lines: 1000

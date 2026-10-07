@@ -60,3 +60,12 @@ export function assertNoSensitiveText(source: string, file: string): void {
     throw new Error(`Sensitive public content blocked in ${file}: ${rulesFound}`);
   }
 }
+
+export function redactSensitiveText(source: string): string {
+  let redacted = source;
+  for (const rule of rules) {
+    rule.pattern.lastIndex = 0;
+    redacted = redacted.replace(rule.pattern, "[REDACTED]");
+  }
+  return redacted;
+}
