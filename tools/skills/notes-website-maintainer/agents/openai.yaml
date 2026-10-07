@@ -1,0 +1,4 @@
+interface:
+  display_name: "Aurora Notes Website Maintainer"
+  short_description: "Safely maintain and publish the Aurora notes website"
+  default_prompt: "Use $notes-website-maintainer to sync, validate, preview, and prepare an authorized Aurora release."
