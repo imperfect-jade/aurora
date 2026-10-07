@@ -1,1 +1,10 @@
 .worktrees/
+node_modules/
+dist/
+.astro/
+.npm-cache/
+playwright-report/
+test-results/
+.env
+.env.*
+!.env.example
