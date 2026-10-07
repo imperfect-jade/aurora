@@ -10,7 +10,7 @@ import { sitePath } from "../lib/site/urls";
     <a href={sitePath("#latest")}>最近更新</a>
   </nav>
   <div class="header-actions">
-    <a class="header-action" href={sitePath("search/")} aria-label="搜索笔记"><span aria-hidden="true">⌕</span><span class="action-label">搜索</span></a>
+    <a class="header-action" href={sitePath("search/")} aria-label="搜索笔记" data-search-open><span aria-hidden="true">⌕</span><span class="action-label">搜索</span></a>
     <button class="header-action" type="button" data-theme-toggle aria-label="切换主题"><span aria-hidden="true" data-theme-icon>◐</span><span class="action-label" data-theme-label>主题</span></button>
   </div>
 </header>

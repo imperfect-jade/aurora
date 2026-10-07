@@ -1,0 +1,20 @@
+---
+import { sitePath } from "../lib/site/urls";
+
+interface Props {
+  autofocus?: boolean;
+}
+
+const { autofocus = false } = Astro.props;
+---
+
+<div class="search-interface" data-search-root data-pagefind-base={sitePath("pagefind/")}>
+  <label class="search-label">
+    <span class="sr-only">搜索笔记</span>
+    <span aria-hidden="true">⌕</span>
+    <input type="search" placeholder="搜索课程、章节或知识点" autocomplete="off" data-search-input autofocus={autofocus} />
+    <kbd>/</kbd>
+  </label>
+  <p class="search-status" role="status" aria-live="polite" data-search-status>输入关键词开始搜索。</p>
+  <div class="search-results" data-search-results></div>
+</div>

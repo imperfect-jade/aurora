@@ -1,0 +1,17 @@
+---
+import type { SearchDocument } from "../lib/search/document";
+
+interface Props {
+  document: SearchDocument;
+}
+
+const { document } = Astro.props;
+---
+
+<div class="search-index-only" data-pagefind-body aria-hidden="true">
+  <span data-pagefind-meta="title">{document.title}</span>
+  <span data-pagefind-meta="category" data-pagefind-filter="category">{document.category}</span>
+  {document.course && <span data-pagefind-meta="course">{document.course}</span>}
+  <span data-pagefind-meta="summary">{document.summary}</span>
+  <span>{document.searchText}</span>
+</div>

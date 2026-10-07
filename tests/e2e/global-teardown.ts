@@ -1,3 +1,3 @@
-import { removeContentFixture } from "./content-fixture";
+import { removeContentFixture } from "./content-fixture.mjs";
 
 export default removeContentFixture;

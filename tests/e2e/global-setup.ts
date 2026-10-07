@@ -1,3 +1,3 @@
-import { createContentFixture } from "./content-fixture";
+import { createContentFixture } from "./content-fixture.mjs";
 
 export default createContentFixture;

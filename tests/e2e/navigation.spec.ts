@@ -42,3 +42,13 @@ test("the skip link supports keyboard navigation", async ({ page }) => {
   await page.keyboard.press("Enter");
   await expect(page.locator("#main-content")).toBeFocused();
 });
+
+test("the slash shortcut opens a focused search dialog", async ({ page }) => {
+  await page.goto("./");
+  await page.keyboard.press("/");
+  const dialog = page.getByRole("dialog", { name: "搜索笔记" });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole("searchbox")).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+});
