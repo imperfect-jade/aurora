@@ -1,0 +1,3 @@
+# Copy this file to config/vault.local.yml and replace the placeholder locally.
+# vault.local.yml is ignored by Git.
+vaultRoot: PATH_TO_YOUR_OBSIDIAN_VAULT
