@@ -1,23 +1,93 @@
-:root, :root[data-theme="dark"] {
-  color-scheme: dark; --bg:#050914; --bg-deep:#02040a; --text:#f7f7f5;
-  --text-soft:rgba(231,237,247,.72); --text-faint:rgba(213,223,239,.5);
-  --accent:#e4b863; --accent-soft:#f2d89c; --glass-fill:rgba(255,255,255,.14);
-  --glass-fill-subtle:rgba(255,255,255,.075); --glass-stroke:rgba(255,255,255,.17);
-  --glass-highlight:rgba(255,255,255,.27); --glass-shadow:0 2px 20px rgba(0,0,0,.5);
-  --glass-shadow-hover:0 12px 34px rgba(0,0,0,.42); --glass-blur:20px;
-  --line:rgba(255,255,255,.12); --focus:#f4cc78; --star:rgba(219,234,255,.72);
-  --nebula-a:rgba(34,83,148,.45); --nebula-b:rgba(75,45,112,.24);
-  --celestial-shadow:#031126; --celestial-light:#8db8de; --celestial-mid:#245884;
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #050914;
+  --bg-deep: #02040a;
+  --text: #f7f7f5;
+  --space-image: url("/aurora/assets/backgrounds/aurora-galaxy-dark.webp");
+  --space-overlay:
+    linear-gradient(
+      115deg,
+      rgba(0, 4, 12, 0.18),
+      rgba(0, 4, 12, 0.04) 48%,
+      rgba(0, 4, 12, 0.2)
+    ),
+    radial-gradient(
+      circle at 50% 42%,
+      transparent 42%,
+      rgba(0, 2, 8, 0.24) 100%
+    );
+  --text-soft: rgba(231, 237, 247, 0.72);
+  --text-faint: rgba(213, 223, 239, 0.5);
+  --accent: #e4b863;
+  --accent-soft: #f2d89c;
+  --glass-fill: rgba(255, 255, 255, 0.14);
+  --glass-fill-nested: rgba(255, 255, 255, 0.06);
+  --glass-fill-nested-hover: rgba(255, 255, 255, 0.1);
+  --glass-fill-subtle: var(--glass-fill-nested);
+  --glass-fill-hover: rgba(255, 255, 255, 0.18);
+  --glass-stroke: rgba(255, 255, 255, 0.17);
+  --glass-highlight: rgba(255, 255, 255, 0.27);
+  --glass-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  --glass-shadow-hover: 0 12px 34px rgba(0, 0, 0, 0.42);
+  --glass-blur: 20px;
+  --line: rgba(255, 255, 255, 0.12);
+  --focus: #f4cc78;
+  --star: rgba(219, 234, 255, 0.72);
+  --nebula-a: rgba(34, 83, 148, 0.45);
+  --nebula-b: rgba(75, 45, 112, 0.24);
+  --celestial-shadow: #031126;
+  --celestial-light: #8db8de;
+  --celestial-mid: #245884;
 }
 :root[data-theme="light"] {
-  color-scheme: light; --bg:#dfe9f1; --bg-deep:#f6f1e9; --text:#15202d;
-  --text-soft:rgba(28,42,57,.72); --text-faint:rgba(33,51,69,.52);
-  --accent:#916d2e; --accent-soft:#6e5224; --glass-fill:rgba(255,255,255,.34);
-  --glass-fill-subtle:rgba(255,255,255,.22); --glass-stroke:rgba(255,255,255,.62);
-  --glass-highlight:rgba(255,255,255,.88); --glass-shadow:0 10px 34px rgba(68,83,102,.16);
-  --glass-shadow-hover:0 18px 44px rgba(68,83,102,.22); --glass-blur:20px;
-  --line:rgba(42,61,82,.14); --focus:#74531e; --star:rgba(255,255,255,.8);
-  --nebula-a:rgba(117,161,201,.36); --nebula-b:rgba(217,181,212,.28);
-  --celestial-shadow:#9ba5b1; --celestial-light:#fff; --celestial-mid:#d1d7dd;
+  color-scheme: light;
+  --bg: #dfe9f1;
+  --bg-deep: #f6f1e9;
+  --text: #15202d;
+  --space-image: url("/aurora/assets/backgrounds/aurora-cosmos-light.webp");
+  --space-overlay:
+    linear-gradient(
+      115deg,
+      rgba(246, 250, 253, 0.08),
+      rgba(226, 238, 247, 0.02) 48%,
+      rgba(255, 255, 255, 0.12)
+    ),
+    radial-gradient(
+      circle at 50% 42%,
+      transparent 44%,
+      rgba(177, 199, 216, 0.12) 100%
+    );
+  --text-soft: rgba(28, 42, 57, 0.72);
+  --text-faint: rgba(33, 51, 69, 0.52);
+  --accent: #916d2e;
+  --accent-soft: #6e5224;
+  --glass-fill: rgba(255, 255, 255, 0.32);
+  --glass-fill-nested: rgba(255, 255, 255, 0.16);
+  --glass-fill-nested-hover: rgba(255, 255, 255, 0.22);
+  --glass-fill-subtle: var(--glass-fill-nested);
+  --glass-fill-hover: rgba(255, 255, 255, 0.4);
+  --glass-stroke: rgba(255, 255, 255, 0.62);
+  --glass-highlight: rgba(255, 255, 255, 0.88);
+  --glass-shadow: 0 2px 20px rgba(48, 66, 84, 0.18);
+  --glass-shadow-hover: 0 18px 44px rgba(68, 83, 102, 0.22);
+  --glass-blur: 20px;
+  --line: rgba(42, 61, 82, 0.14);
+  --focus: #74531e;
+  --star: rgba(255, 255, 255, 0.8);
+  --nebula-a: rgba(117, 161, 201, 0.36);
+  --nebula-b: rgba(217, 181, 212, 0.28);
+  --celestial-shadow: #9ba5b1;
+  --celestial-light: #fff;
+  --celestial-mid: #d1d7dd;
 }
-@media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; } }
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
