@@ -1,0 +1,13 @@
+---
+import { getCollection } from "astro:content";
+import NoteCard from "../../components/NoteCard.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { loadCategoryRegistry, type Category } from "../../lib/content/schema";
+export async function getStaticPaths() { const categories = await loadCategoryRegistry("config/categories.yml"); return categories.map((category) => ({ params: { id: category.id }, props: { category } })); }
+interface Props { category: Category }
+const { category } = Astro.props;
+const notes = (await getCollection("notes")).filter((note) => note.data.category === category.id);
+const courses = notes.filter((note) => note.data.type === "course-moc");
+const standalone = notes.filter((note) => note.data.type !== "course-moc");
+---
+<BaseLayout title={`${category.label} · Aurora`} description={category.description}><div class="page-stack"><header class="page-heading"><p class="eyebrow">Category</p><h1 class="page-title">{category.label}</h1><p class="lede">{category.description}</p></header><section class="section-panel glass"><div class="section-heading"><div><h2>课程与专题</h2><p>从结构化入口开始阅读。</p></div></div>{courses.length ? <div class="note-grid">{courses.map((note) => <NoteCard note={note} course />)}</div> : <p class="empty-state">这一分类尚无课程或专题。</p>}</section>{standalone.length > 0 && <section class="section-panel glass"><div class="section-heading"><div><h2>独立笔记</h2></div></div><div class="note-grid">{standalone.map((note) => <NoteCard note={note} />)}</div></section>}</div></BaseLayout>

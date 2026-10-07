@@ -1,0 +1,28 @@
+---
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import "../styles/tokens.css";
+import "../styles/global.css";
+interface Props { title: string; description?: string; pageClass?: string }
+const { title, description = "按分类、课程、专题与章节组织的中文学习笔记。", pageClass = "" } = Astro.props;
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} /><meta name="color-scheme" content="dark light" />
+    <title>{title}</title>
+    <script is:inline>
+      (() => {
+        const stored = localStorage.getItem("aurora-theme");
+        const systemDark = matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = stored === "light" || stored === "dark" ? stored : systemDark ? "dark" : "light";
+      })();
+    </script>
+  </head>
+  <body class={pageClass}>
+    <a class="skip-link" href="#main-content">跳到正文</a>
+    <div class="sky" aria-hidden="true"><span></span></div>
+    <div class="site-shell"><SiteHeader /><main id="main-content" tabindex="-1"><slot /></main><SiteFooter /></div>
+  </body>
+</html>

@@ -1,19 +1,22 @@
 ---
-const title = "Aurora 学习笔记";
+import { getCollection } from "astro:content";
+import CategoryCard from "../components/CategoryCard.astro";
+import NoteCard from "../components/NoteCard.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { loadCategoryRegistry } from "../lib/content/schema";
+import { sitePath } from "../lib/site/urls";
+const categories = await loadCategoryRegistry("config/categories.yml");
+const notes = await getCollection("notes");
+const courses = notes.filter((note) => note.data.type === "course-moc").slice(0, 3);
+const latest = [...notes].filter((note) => note.data.type !== "course-moc").sort((a, b) => b.data.updated.localeCompare(a.data.updated)).slice(0, 6);
+const counts = new Map(categories.map((category) => [category.id, notes.filter((note) => note.data.category === category.id).length]));
 ---
-
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="面向读者的个人学习笔记网站" />
-    <title>{title}</title>
-  </head>
-  <body>
-    <main>
-      <h1>{title}</h1>
-      <p>网站正在建设中。</p>
-    </main>
-  </body>
-</html>
+<BaseLayout title="Aurora · 学习笔记" pageClass="home-page">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy"><p class="eyebrow">Reader-first knowledge library</p><h1 id="hero-title">向未知前行，<em>也向更清晰的自己靠近。</em></h1><p class="lede">按分类、课程与章节组织的中文学习笔记。快速抵达所需内容，也能沿着知识之间的联系继续探索。</p><a class="hero-search glass glass-interactive" href={sitePath("search/")}><span>⌕&nbsp;&nbsp;搜索课程、章节或知识点</span><kbd>/</kbd></a></div>
+    <div class="hero-art" aria-label="缓慢自转的主题天体"><div class="celestial-orbit"></div><div class="celestial-body" data-celestial-placeholder></div><aside class="hero-note glass"><strong>阅读，从清晰的路径开始</strong><span>分类负责抵达，目录负责定位，内部链接负责延伸。</span></aside></div>
+  </section>
+  <section class="section-panel glass" aria-labelledby="categories-title"><div class="section-heading"><div><h2 id="categories-title">浏览分类</h2><p>先找到领域，再进入课程与专题。</p></div><a class="text-link" href={sitePath("categories/")}>查看全部 →</a></div><div class="category-grid">{categories.map((category) => <CategoryCard category={category} count={counts.get(category.id)} />)}</div></section>
+  <section class="section-panel glass" aria-labelledby="courses-title"><div class="section-heading"><div><h2 id="courses-title">精选课程与专题</h2><p>入口页串联章节，正文保持专注阅读。</p></div><a class="text-link" href={sitePath("courses/")}>进入课程库 →</a></div>{courses.length > 0 ? <div class="note-grid">{courses.map((note) => <NoteCard note={note} course />)}</div> : <p class="empty-state">公开课程正在整理，完成同步后会在这里出现。</p>}</section>
+  <section class="section-panel glass" id="latest" aria-labelledby="latest-title"><div class="section-heading"><div><h2 id="latest-title">最近更新</h2><p>从最近完善的内容继续阅读。</p></div></div>{latest.length > 0 ? <div class="note-grid">{latest.map((note) => <NoteCard note={note} />)}</div> : <p class="empty-state">尚无公开更新。</p>}</section>
+</BaseLayout>

@@ -1,0 +1,12 @@
+---
+import type { Category } from "../lib/content/schema";
+import { sitePath } from "../lib/site/urls";
+interface Props { category: Category; count?: number }
+const { category, count = 0 } = Astro.props;
+const icons: Record<string, string> = { courses: "◇", tools: "⌘", development: "</>", "artificial-intelligence": "✦" };
+---
+<a class="category-card glass glass-interactive" href={sitePath(`categories/${category.id}/`)}>
+  <span class="category-icon" aria-hidden="true">{icons[category.id] ?? "·"}</span>
+  <span class="category-copy"><strong>{category.label}</strong><span>{category.description}</span></span>
+  <span class="category-count">{count} 篇</span>
+</a>

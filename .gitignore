@@ -5,6 +5,7 @@ dist/
 .npm-cache/
 playwright-report/
 test-results/
+.playwright-browsers/
 .env
 .env.*
 !.env.example

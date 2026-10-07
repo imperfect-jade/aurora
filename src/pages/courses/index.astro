@@ -1,0 +1,7 @@
+---
+import { getCollection } from "astro:content";
+import NoteCard from "../../components/NoteCard.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const courses = (await getCollection("notes")).filter((note) => note.data.type === "course-moc");
+---
+<BaseLayout title="课程与专题 · Aurora"><div class="page-stack"><header class="page-heading"><p class="eyebrow">Courses & topics</p><h1 class="page-title">课程与专题</h1><p class="lede">用入口页理解结构，再选择最需要的章节。</p></header><section class="section-panel glass">{courses.length ? <div class="note-grid">{courses.map((note) => <NoteCard note={note} course />)}</div> : <p class="empty-state">尚无公开课程或专题。</p>}</section></div></BaseLayout>

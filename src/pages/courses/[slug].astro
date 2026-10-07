@@ -1,0 +1,11 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { sitePath } from "../../lib/site/urls";
+export async function getStaticPaths() { const notes = await getCollection("notes"); return notes.filter((note) => note.data.type === "course-moc").map((course) => ({ params: { slug: course.data.slug }, props: { course } })); }
+const { course } = Astro.props;
+const notes = await getCollection("notes");
+const chapters = notes.filter((note) => note.data.course === course.data.slug || note.data.parent === course.data.slug).filter((note) => note.data.type !== "review").sort((a, b) => String(a.data.chapter ?? "").localeCompare(String(b.data.chapter ?? ""), "zh-CN", { numeric: true }));
+const reviews = notes.filter((note) => note.data.type === "review" && (note.data.course === course.data.slug || note.data.parent === course.data.slug));
+---
+<BaseLayout title={`${course.data.title} · Aurora`} description={course.data.summary}><div class="page-stack"><section class="course-hero"><header class="glass"><p class="eyebrow">Course / topic</p><h1 class="page-title">{course.data.title}</h1><p class="lede">{course.data.summary}</p></header><aside class="course-meta glass"><strong>阅读建议</strong><span>先浏览章节关系，再进入需要的知识点。目录会帮助你快速定位。</span><span>{chapters.length} 个章节 · 更新于 {course.data.updated}</span></aside></section><section class="section-panel glass"><div class="section-heading"><div><h2>学习路线与章节</h2><p>按顺序学习，也可以直接进入目标章节。</p></div></div>{chapters.length ? <div class="chapter-list">{chapters.map((chapter, index) => <a class="chapter-link glass-interactive" href={sitePath(`notes/${chapter.data.slug}/`)}><span class="chapter-number">{String(chapter.data.chapter ?? index + 1).padStart(2, "0")}</span><strong>{chapter.data.title}</strong><small>{chapter.data.summary}</small></a>)}</div> : <p class="empty-state">章节正在整理。</p>}</section>{reviews.length > 0 && <section class="section-panel glass"><div class="section-heading"><div><h2>复习与总结</h2></div></div><div class="chapter-list">{reviews.map((review) => <a class="chapter-link glass-interactive" href={sitePath(`notes/${review.data.slug}/`)}><span class="chapter-number">✓</span><strong>{review.data.title}</strong><small>{review.data.summary}</small></a>)}</div></section>}</div></BaseLayout>

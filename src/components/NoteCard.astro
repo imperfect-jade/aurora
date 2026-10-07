@@ -1,0 +1,11 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { sitePath } from "../lib/site/urls";
+interface Props { note: CollectionEntry<"notes">; course?: boolean }
+const { note, course = false } = Astro.props;
+const href = course ? sitePath(`courses/${note.data.slug}/`) : sitePath(`notes/${note.data.slug}/`);
+---
+<a class="note-card glass glass-interactive" href={href}>
+  <span class="note-kicker">{course ? "课程 / 专题" : note.data.type === "review" ? "复习与总结" : "笔记"}</span>
+  <strong>{note.data.title}</strong><span>{note.data.summary}</span><span class="note-meta">更新于 {note.data.updated}</span>
+</a>

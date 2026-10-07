@@ -1,0 +1,14 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { sitePath } from "../../lib/site/urls";
+export async function getStaticPaths() { const notes = await getCollection("notes"); return notes.filter((note) => note.data.type !== "course-moc").map((note) => ({ params: { slug: note.data.slug }, props: { note } })); }
+const { note } = Astro.props;
+const allNotes = await getCollection("notes");
+const courseSlug = note.data.course ?? note.data.parent;
+const course = courseSlug ? allNotes.find((entry) => entry.data.slug === courseSlug && entry.data.type === "course-moc") : undefined;
+const siblings = allNotes.filter((entry) => entry.data.type !== "course-moc").filter((entry) => courseSlug ? entry.data.course === courseSlug || entry.data.parent === courseSlug : entry.data.category === note.data.category).sort((a, b) => String(a.data.chapter ?? "").localeCompare(String(b.data.chapter ?? ""), "zh-CN", { numeric: true }));
+const { Content, headings } = await render(note);
+const toc = headings.filter((heading) => heading.depth >= 2);
+---
+<BaseLayout title={`${note.data.title} · Aurora`} description={note.data.summary} pageClass="reading-page"><div class="reader-page"><details class="reader-mobile-nav glass" data-mobile-reader-nav><summary>章节与本页目录</summary><div class="reader-mobile-links">{siblings.map((entry) => <a href={sitePath(`notes/${entry.data.slug}/`)}>{entry.data.title}</a>)}{toc.map((heading) => <a href={`#${heading.slug}`}>{heading.text}</a>)}</div></details><div class="reader-grid"><aside class="reader-sidebar glass" data-reader-chapters><h2>{course?.data.title ?? "同类笔记"}</h2><nav aria-label="章节目录">{siblings.map((entry) => <a href={sitePath(`notes/${entry.data.slug}/`)} aria-current={entry.data.slug === note.data.slug ? "page" : undefined}>{entry.data.title}</a>)}</nav></aside><article class="reader-article glass"><header class="article-header"><p class="eyebrow">{course?.data.title ?? note.data.category}</p><h1>{note.data.title}</h1><p>{note.data.summary}</p><div class="article-meta"><span>更新于 {note.data.updated}</span>{note.data.tags?.map((tag) => <span>#{tag}</span>)}</div></header><div class="note-prose"><Content /></div></article><aside class="reader-sidebar glass" data-reader-toc><h2>本页目录</h2><nav aria-label="本页目录">{toc.map((heading) => <a class={`toc-depth-${heading.depth}`} href={`#${heading.slug}`}>{heading.text}</a>)}</nav></aside></div></div></BaseLayout>

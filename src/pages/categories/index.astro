@@ -1,0 +1,9 @@
+---
+import { getCollection } from "astro:content";
+import CategoryCard from "../../components/CategoryCard.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { loadCategoryRegistry } from "../../lib/content/schema";
+const categories = await loadCategoryRegistry("config/categories.yml");
+const notes = await getCollection("notes");
+---
+<BaseLayout title="分类 · Aurora"><div class="page-stack"><header class="page-heading"><p class="eyebrow">Knowledge map</p><h1 class="page-title">浏览分类</h1><p class="lede">从熟悉的领域进入，也为偶然发现保留路径。</p></header><section class="section-panel glass"><div class="category-grid">{categories.map((category) => <CategoryCard category={category} count={notes.filter((note) => note.data.category === category.id).length} />)}</div></section></div></BaseLayout>

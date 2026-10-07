@@ -1,0 +1,38 @@
+---
+import { sitePath } from "../lib/site/urls";
+---
+
+<header class="site-header glass" data-site-header>
+  <a class="brand" href={sitePath()}>Aurora</a>
+  <nav aria-label="主导航">
+    <a href={sitePath("categories/")}>分类</a>
+    <a href={sitePath("courses/")}>课程与专题</a>
+    <a href={sitePath("#latest")}>最近更新</a>
+  </nav>
+  <div class="header-actions">
+    <a class="header-action" href={sitePath("search/")} aria-label="搜索笔记"><span aria-hidden="true">⌕</span><span class="action-label">搜索</span></a>
+    <button class="header-action" type="button" data-theme-toggle aria-label="切换主题"><span aria-hidden="true" data-theme-icon>◐</span><span class="action-label" data-theme-label>主题</span></button>
+  </div>
+</header>
+
+<script is:inline>
+  (() => {
+    const button = document.querySelector("[data-theme-toggle]");
+    if (!(button instanceof HTMLButtonElement)) return;
+    const label = button.querySelector("[data-theme-label]");
+    const icon = button.querySelector("[data-theme-icon]");
+    const update = () => {
+      const current = document.documentElement.dataset.theme === "light" ? "light" : "dark";
+      button.setAttribute("aria-label", current === "dark" ? "切换为浅色主题" : "切换为深色主题");
+      if (label) label.textContent = current === "dark" ? "深色" : "浅色";
+      if (icon) icon.textContent = current === "dark" ? "☾" : "☼";
+    };
+    update();
+    button.addEventListener("click", () => {
+      const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem("aurora-theme", next);
+      update();
+    });
+  })();
+</script>
