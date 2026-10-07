@@ -1,0 +1,23 @@
+---
+import { sitePath } from "../../lib/site/urls";
+const earthTexture = sitePath("assets/celestial/earth-blue-marble.webp");
+const moonTexture = sitePath("assets/celestial/moon-lroc.webp");
+---
+<div
+  class="celestial-scene"
+  data-celestial-scene
+  data-celestial-status="loading"
+  data-earth-texture={earthTexture}
+  data-moon-texture={moonTexture}
+  aria-hidden="true"
+>
+  <div class="celestial-orbit"></div>
+  <canvas data-celestial-canvas></canvas>
+  <div class="celestial-fallback" data-celestial-fallback>
+    <img class="fallback-earth" src={earthTexture} alt="" width="2048" height="1024" />
+    <img class="fallback-moon" src={moonTexture} alt="" width="2048" height="1024" />
+  </div>
+</div>
+<script>
+  import "../../scripts/celestial-scene";
+</script>
