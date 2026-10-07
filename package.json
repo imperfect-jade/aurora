@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "preview:local": "astro preview",
     "build": "astro build && node scripts/build-search.mjs",
     "preview": "astro preview",
     "sync": "tsx scripts/sync-content.ts",
@@ -15,7 +16,9 @@
     "typecheck": "astro check",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "validate": "npm run typecheck && npm test && npm run build",
+    "verify:built": "node scripts/verify-built-site.mjs"
   },
   "dependencies": {
     "astro": "7.3.6",
