@@ -85,8 +85,8 @@ Three.js 只用于首页天体。阅读页不加载 WebGL。低性能、无 WebG
 
 ## 5. 内容合同
 
-源 Vault：`D:\Obsidian\files\Learning-Notes`  
-发布目录：`40 Published\Courses`、`40 Published\Reviews`、`40 Published\Tools`  
+源 Vault：由 gitignored 的 `config/vault.local.yml` 在本地配置，不写入仓库
+发布目录：`40 Published\Courses`、`40 Published\Reviews`、`40 Published\Tools`
 附件目录：`90 Attachments`
 
 网站所需公开字段：

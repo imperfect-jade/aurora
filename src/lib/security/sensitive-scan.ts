@@ -12,7 +12,7 @@ interface SensitiveRule {
 const rules: SensitiveRule[] = [
   {
     id: "local-absolute-path",
-    pattern: /(?:\b[A-Za-z]:\\[^\r\n]+|\/(?:Users|home)\/[^\s/]+(?:\/[^\s]*)?)/g,
+    pattern: /(?:\b[A-Za-z]:\\[^\r\n]+|(?<![A-Za-z0-9_.-])\/(?:Users|home)\/[^\s/]+(?:\/[^\s]*)?)/g,
   },
   {
     id: "credential-token",

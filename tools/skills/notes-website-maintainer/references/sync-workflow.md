@@ -10,6 +10,7 @@ Require these `package.json` commands to exist before continuing:
 |---|---|
 | `npm run sync:check` | Read-only Vault preflight using a temporary output root |
 | `npm run sync` | Atomically refresh generated public notes and referenced media |
+| `npm run security:scan` | Scan tracked and unignored repository text with redacted findings |
 | `npm run validate` | Typecheck, unit tests, production build, and Pagefind index |
 | `npm run test:e2e` | Reader navigation, theme, motion, accessibility, and dialog behavior |
 | `npm run dev` | Local development preview |
@@ -25,7 +26,7 @@ If an interface is absent or incompatible, stop and report it. Do not emulate it
 3. Run `npm run sync:check`. On failure, report redacted blockers and stop.
 4. Run `npm run sync` only when the task includes updating generated website content.
 5. Review the complete diff. Separate content changes from design, code, dependency, and workflow changes.
-6. Run `npm run validate` and the browser tests appropriate to the change.
+6. Run `npm run validate` (including the repository sensitive-text scan) and the browser tests appropriate to the change.
 7. Preview reader-facing routes when content or UI changed.
 8. Prepare the release report and apply [release-authorization.md](release-authorization.md).
 

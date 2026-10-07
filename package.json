@@ -13,12 +13,13 @@
     "preview": "astro preview",
     "sync:check": "node scripts/sync-content.ts --check",
     "sync": "node scripts/sync-content.ts",
+    "security:scan": "node scripts/scan-repository.ts",
     "release:prepare": "node scripts/prepare-release.ts",
     "typecheck": "astro check",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "validate": "npm run typecheck && npm test && npm run build",
+    "validate": "npm run security:scan && npm run typecheck && npm test && npm run build",
     "verify:built": "node scripts/verify-built-site.mjs"
   },
   "dependencies": {

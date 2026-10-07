@@ -31,7 +31,7 @@ const agentConfig = parse(await readFile(resolve(skillRoot, "agents/openai.yaml"
 assert(agentConfig.interface?.default_prompt?.includes("$notes-website-maintainer"), "default prompt must invoke the skill explicitly");
 
 const packageJson = JSON.parse(await readFile(resolve("package.json"), "utf8"));
-for (const command of ["sync:check", "sync", "validate", "dev", "preview", "release:prepare"]) {
+for (const command of ["sync:check", "sync", "security:scan", "validate", "dev", "preview", "release:prepare"]) {
   assert(packageJson.scripts?.[command], `repository command is missing: ${command}`);
 }
 

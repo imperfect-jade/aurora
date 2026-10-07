@@ -9,6 +9,9 @@ async function loadSecurityModule(name: string) {
 }
 
 describe("sensitive text scanning", () => {
+  const syntheticEmail = ["author", "example.invalid"].join("@");
+  const syntheticPhone = ["138", "0013", "8000"].join("");
+
   it("blocks local absolute paths without exposing the path", async () => {
     const { scanSensitiveText } = await loadSecurityModule("sensitive-scan");
     const privatePath = ["D:", "private", "vault", "note.md"].join("\\");
@@ -25,6 +28,12 @@ describe("sensitive text scanning", () => {
     expect(JSON.stringify(findings)).not.toContain(privatePath);
   });
 
+  it("does not mistake a relative home-named module path for an absolute user path", async () => {
+    const { scanSensitiveText } = await loadSecurityModule("sensitive-scan");
+
+    expect(scanSensitiveText('import Scene from "../components/home/Scene.astro";', "source.ts")).toEqual([]);
+  });
+
   it("blocks token-shaped secrets without exposing their value", async () => {
     const { scanSensitiveText } = await loadSecurityModule("sensitive-scan");
     const syntheticToken = ["ghp", "_", "A".repeat(36)].join("");
@@ -36,8 +45,8 @@ describe("sensitive text scanning", () => {
   });
 
   it.each([
-    ["author@example.invalid", "email-address"],
-    ["13800138000", "mainland-phone-number"],
+    [syntheticEmail, "email-address"],
+    [syntheticPhone, "mainland-phone-number"],
   ])("blocks personal information pattern %s", async (value, ruleId) => {
     const { scanSensitiveText } = await loadSecurityModule("sensitive-scan");
 

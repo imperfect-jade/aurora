@@ -34,7 +34,7 @@ describe("public note schema", () => {
           source_user: "private attribution",
           source_web: "https://private.example",
           "source-index": "private/index",
-          local_path: "D:\\private\\note.md",
+          local_path: ["D:", "private", "note.md"].join("\\"),
         },
         ["courses"],
       ),
